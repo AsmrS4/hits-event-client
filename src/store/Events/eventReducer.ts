@@ -3,10 +3,12 @@ import type { EventProps } from "../../models/Event";
 
 interface EventState {
     events: Array<EventProps>
+    isLoaded: boolean
 }
 
 const initialState: EventState = {
-    events: []
+    events: [],
+    isLoaded: false
 }
 
 const eventSlice = createSlice({
@@ -15,6 +17,7 @@ const eventSlice = createSlice({
     reducers: {
         setEvents: (state, action) => {
             state.events = action.payload;
+            state.isLoaded = true
         },
         clearEvents: (state) => {
             state.events = []

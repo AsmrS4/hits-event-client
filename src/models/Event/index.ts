@@ -3,6 +3,7 @@ export interface EventProps {
     title: string;
     description?: string;
     location: string;
+    companyName: string;
     date: string;
     deadline?:string;
     createdAt?: string;

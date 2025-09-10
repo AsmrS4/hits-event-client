@@ -9,13 +9,16 @@ import { fetchEvents } from '../../store/Events/eventAction';
 const HomePage = () => {
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [eventList, setEvents] = React.useState<Array<EventProps>>([]);
-    const { events } = useAppSelector((state) => state.eventReducer);
+    const { events, isLoaded } = useAppSelector((state) => state.eventReducer);
     const dispatch: any = useDispatch();
 
     React.useEffect(() => {
-        dispatch(fetchEvents());
-        setEvents(events);
-    }, []);
+        if (isLoaded) {
+            setEvents(events);
+        } else {
+            dispatch(fetchEvents());
+        }
+    }, [isLoaded]);
     React.useEffect(() => {
         setEvents(
             searchValue.trim() != ''
@@ -26,7 +29,7 @@ const HomePage = () => {
         );
     }, [searchValue]);
     return (
-        <main className='w-full h-screen box-border flex flex-col  px-6 py-10'>
+        <main className='w-full h-auto flex flex-col  px-6 py-10'>
             <div className='flex flex-col mx-auto max-w-[768px] w-full gap-10 justify-between'>
                 <Field
                     size='small'
