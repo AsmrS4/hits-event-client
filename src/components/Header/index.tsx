@@ -17,10 +17,17 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { clearSession } from '../../store/Auth/authReducer';
-import { EditProfileModal } from '../Modal';
+import { EditProfileModal } from '../Modal/EditModal';
 
-const deanPages = ['Мероприятия', 'Заявки', 'Партнеры'];
-const studentPages = ['Мероприятия', 'Билеты'];
+const deanPages = [
+    ['Мероприятия', '/'],
+    ['Заявки', '/requests'],
+    ['Партнеры', '/companies'],
+];
+const studentPages = [
+    ['Мероприятия', '/'],
+    ['Билеты', '/bookings'],
+];
 
 const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -39,6 +46,9 @@ const Header = () => {
     };
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
+    };
+    const handleNavigate = (path: string) => {
+        navigate(path);
     };
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -107,10 +117,15 @@ const Header = () => {
                                 sx={{ display: { xs: 'block', md: 'none' } }}
                             >
                                 {(role == 'DEAN' ? deanPages : studentPages).map(
-                                    (item: string, index: number) => (
-                                        <MenuItem key={index} onClick={handleCloseNavMenu}>
+                                    (item: Array<string>, index: number) => (
+                                        <MenuItem
+                                            key={index}
+                                            onClick={() => {
+                                                handleNavigate(item[1]);
+                                            }}
+                                        >
                                             <Typography sx={{ textAlign: 'center' }}>
-                                                {item}
+                                                {item[0]}
                                             </Typography>
                                         </MenuItem>
                                     ),
@@ -139,13 +154,15 @@ const Header = () => {
                     {isAuth && (
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                             {(role == 'DEAN' ? deanPages : studentPages).map(
-                                (item: string, index: number) => (
+                                (item: Array<string>, index: number) => (
                                     <Button
                                         key={index}
-                                        onClick={handleCloseNavMenu}
+                                        onClick={() => {
+                                            handleNavigate(item[1]);
+                                        }}
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                     >
-                                        {item}
+                                        {item[0]}
                                     </Button>
                                 ),
                             )}
