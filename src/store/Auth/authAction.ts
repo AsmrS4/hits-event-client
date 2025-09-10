@@ -25,14 +25,17 @@ export const authorizeUser = (payload: LoginProps) => async (dispatch: Dispatch)
                 token: JWT
             }))
             
-        } catch (error: AxiosError) {
+        } catch (error) {
             switch(error.status) {
                 case 500:
                     dispatch(setErrorMessage("Не удалось обработать запрос"))
-                case 404:
+                    break;
+                case 400:
                     dispatch(setErrorMessage("Неверный логин или пароль"))
+                    break;
                 case 401:
                     dispatch(setErrorMessage("Аккаунт не подтвержден"))
+                    break;
                 default:
                     dispatch(setErrorMessage("Что-то пошло не так"))
             }
