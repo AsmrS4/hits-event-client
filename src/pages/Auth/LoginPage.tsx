@@ -1,15 +1,21 @@
 import React from 'react';
-import { loginSchema, type LoginSchema } from './index.config';
-import { Controller, type SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextField, Link } from '@mui/material';
+import { loginSchema, type LoginSchema } from './index.config';
+
+import type { LoginProps } from '@models/Auth';
+import { useAppSelector } from '@hooks/useAppSelector';
+import { authorizeUser } from '@store/Auth/authAction';
+import { setErrorMessage } from '@store/Auth/authReducer';
+import { ErrorToast, SuccessToast } from '@components/Toast';
 
 const LoginPage = () => {
     const {
         control,
-        register,
         handleSubmit,
-        getValues,
         formState: { errors },
     } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
@@ -18,12 +24,28 @@ const LoginPage = () => {
             password: '',
         },
     });
-
-    const handleLogin = () => {
-        console.log(getValues('login'));
-        console.log(getValues('password'));
+    const { error, isAuth } = useAppSelector((state) => state.authReducer);
+    const dispatch: any = useDispatch();
+    const navigate = useNavigate();
+    const handleForm = (form: LoginProps) => {
+        try {
+            dispatch(authorizeUser(form));
+        } catch (e) {
+            ErrorToast('Не удалось обработать запрос');
+        }
     };
-    const handleForm = () => {};
+    React.useEffect(() => {
+        if (isAuth) {
+            SuccessToast('Добро пожаловать');
+            navigate('/');
+        }
+    }, [isAuth]);
+    React.useEffect(() => {
+        if (error) {
+            ErrorToast(error);
+            dispatch(setErrorMessage(null));
+        }
+    }, [error]);
     return (
         <main className='box-border flex flex-col justify-center w-full px-3 h-screen'>
             <div className='box-border w-full h-full flex flex-col pt-12 items-center'>
@@ -72,7 +94,7 @@ const LoginPage = () => {
                         <Link className='w-full flex justify-center'>
                             <span className='mx-auto cursor-pointer'>Создать аккаунт</span>
                         </Link>
-                        <Button type='submit' variant='contained' onClick={handleLogin}>
+                        <Button type='submit' variant='contained'>
                             Войти
                         </Button>
                     </form>
