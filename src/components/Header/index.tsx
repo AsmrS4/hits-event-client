@@ -17,6 +17,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { clearSession } from '../../store/Auth/authReducer';
+import { EditProfileModal } from '../Modal';
 
 const deanPages = ['Мероприятия', 'Заявки', 'Партнеры'];
 const studentPages = ['Мероприятия', 'Билеты'];
@@ -25,6 +26,8 @@ const Header = () => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
     const { isAuth, login, role } = useAppSelector((state) => state.authReducer);
+    const [open, setOpen] = React.useState<boolean>(false);
+
     const navigate: any = useNavigate();
     const dispatch: any = useDispatch();
 
@@ -34,25 +37,24 @@ const Header = () => {
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
-
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
-
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
     const handleLogout = () => {
         handleCloseUserMenu();
         dispatch(clearSession());
         navigate('/auth/sign-in');
     };
-
     const handleProfile = () => {
         handleCloseUserMenu();
-        navigate('/profile');
+        setOpen(true);
     };
+    React.useEffect(() => {
+        console.log('Is open ' + open);
+    }, [open]);
 
     return (
         <AppBar position='static'>
@@ -192,6 +194,12 @@ const Header = () => {
                     </Box>
                 </Toolbar>
             </Container>
+            <EditProfileModal
+                isOpen={open}
+                handleClick={() => {
+                    setOpen(false);
+                }}
+            />
         </AppBar>
     );
 };

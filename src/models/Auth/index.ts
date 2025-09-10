@@ -11,3 +11,8 @@ export interface ProfileProps {
     createTime: string;
     role: string;
 }
+
+export interface EditProfileProps {
+    firstName: string;
+    lastName: string;
+}
