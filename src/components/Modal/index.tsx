@@ -15,6 +15,7 @@ import type { EditProfileProps, ProfileProps } from '../../models/Auth';
 import { ErrorToast, SuccessToast } from '../Toast';
 import axios from 'axios';
 import { TextField } from '@mui/material';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 interface ModalProps {
     isOpen: boolean;
@@ -37,7 +38,7 @@ export const EditProfileModal = ({ isOpen, handleClick }: ModalProps) => {
     });
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-
+    const { token } = useAppSelector((state) => state.authReducer);
     const handleClose = () => {
         handleClick();
     };
@@ -56,7 +57,7 @@ export const EditProfileModal = ({ isOpen, handleClick }: ModalProps) => {
     };
     React.useEffect(() => {
         getProfile();
-    }, []);
+    }, [token]);
     const editProfile = async (form: EditProfileProps) => {
         try {
             await axios({
