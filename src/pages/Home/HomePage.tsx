@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
 import { fetchEvents } from '../../store/Events/eventAction';
 import { fetchBookings } from '../../store/Booking/bookingActions';
+import { EmptyResult } from '../../components/Stub';
 
 const HomePage = () => {
     const [searchValue, setSearchValue] = React.useState<string>('');
@@ -44,6 +45,7 @@ const HomePage = () => {
                     }}
                 />
                 <div className='list flex flex-col w-full gap-4'>
+                    {eventList.length == 0 && <EmptyResult message={'Мероприятия не найдены'} />}
                     {eventList.map((item) => {
                         return <EventCard key={item.id} {...item} />;
                     })}
