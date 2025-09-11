@@ -19,7 +19,7 @@ export const EventCard = (props: EventProps) => {
     const navigate: any = useNavigate();
     const dispatch: any = useDispatch();
     const handleGuestsClick = () => {
-        navigate(`/event/${props.id}/guests`);
+        navigate(`/event/guests/${props.id}`);
     };
     const handleRegisterClick = async () => {
         try {
