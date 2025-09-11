@@ -1,15 +1,17 @@
 import React from 'react';
-import EventCard from '@models/Event';
-import { dateTimeConverter, isAfterDeadline } from '../../../utils/converter';
-import { Button } from '@mui/material';
-import { useAppSelector } from '../../../hooks/useAppSelector';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+
+import { type EventProps } from '../../../models/Event';
+import { dateTimeConverter, isAfterDeadline } from '../../../utils/converter';
+import { useAppSelector } from '../../../hooks/useAppSelector';
 import { registerOnEvent } from '../../../api/Booking/bookingApi';
 import { ErrorToast, InfoToast } from '../../Toast';
-import { useDispatch } from 'react-redux';
 import { clearSession } from '../../../store/Auth/authReducer';
+import type { BookingProps } from '../../../models/Booking';
 
-export const EventCard = (props: EventCard) => {
+export const EventCard = (props: EventProps) => {
     const { role } = useAppSelector((state) => state.authReducer);
     const { booking } = useAppSelector((state) => state.bookingReducer);
     const [hasRegistry, setHasRegistry] = React.useState<boolean>(false);
@@ -31,13 +33,8 @@ export const EventCard = (props: EventCard) => {
             }
         }
     };
-
     const handleHasRegistry = () => {
-        setHasRegistry(
-            !booking.some((item) => {
-                return (item.id = props.id);
-            }),
-        );
+        setHasRegistry(booking.some((item: BookingProps) => item.eventId == props.id));
     };
     React.useEffect(() => {
         handleHasRegistry();

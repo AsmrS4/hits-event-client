@@ -9,7 +9,10 @@ export const dateTimeConverter = (datetime: string) => {
     return '';
 }
 
-export const isAfterDeadline = (deadline: string) => {
-    const today = new Date();
-    return today.toISOString() >= deadline;
+export const isAfterDeadline = (deadline: string | null | undefined) => {
+    if(deadline) {
+        const today = new Date();
+        return today.toISOString() >= deadline;
+    }
+    return false;
 }

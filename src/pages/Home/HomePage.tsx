@@ -5,6 +5,7 @@ import { EventCard } from '../../components/Card/Event';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDispatch } from 'react-redux';
 import { fetchEvents } from '../../store/Events/eventAction';
+import { fetchBookings } from '../../store/Booking/bookingActions';
 
 const HomePage = () => {
     const [searchValue, setSearchValue] = React.useState<string>('');
@@ -17,6 +18,7 @@ const HomePage = () => {
             setEvents(events);
         } else {
             dispatch(fetchEvents());
+            dispatch(fetchBookings());
         }
     }, [isLoaded]);
     React.useEffect(() => {
