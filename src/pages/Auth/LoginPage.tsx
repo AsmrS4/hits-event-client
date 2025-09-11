@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextField, Link } from '@mui/material';
-import { loginSchema, type LoginSchema } from './index.config';
 
 import type { LoginProps } from '@models/Auth';
 import { useAppSelector } from '@hooks/useAppSelector';
 import { authorizeUser } from '@store/Auth/authAction';
 import { setErrorMessage } from '@store/Auth/authReducer';
 import { ErrorToast, SuccessToast } from '@components/Toast';
+import { loginSchema, type LoginSchema } from './index.config';
+import { fetchBookings } from '../../store/Booking/bookingActions';
 
 const LoginPage = () => {
     const {
@@ -24,7 +25,7 @@ const LoginPage = () => {
             password: '',
         },
     });
-    const { error, isAuth } = useAppSelector((state) => state.authReducer);
+    const { error, isAuth, role } = useAppSelector((state) => state.authReducer);
     const dispatch: any = useDispatch();
     const navigate = useNavigate();
     const handleForm = (form: LoginProps) => {
@@ -39,7 +40,7 @@ const LoginPage = () => {
             SuccessToast('Добро пожаловать');
             navigate('/');
         }
-    }, [isAuth]);
+    }, [isAuth, role]);
     React.useEffect(() => {
         if (error) {
             ErrorToast(error);

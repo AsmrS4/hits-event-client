@@ -26,3 +26,16 @@ export const SuccessToast = (message: string) => {
         transition: Slide,
     });
 }
+
+export const InfoToast = (message: string) => {
+    return toast.info(message, {
+        position: "bottom-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+        transition: Slide,
+    });
+}

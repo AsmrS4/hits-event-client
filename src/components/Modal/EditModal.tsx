@@ -82,7 +82,7 @@ export const EditProfileModal = ({ isOpen, handleClick }: ModalProps) => {
         handleClose();
     };
     return (
-        <React.Fragment>
+        <>
             <Dialog
                 fullScreen={fullScreen}
                 open={isOpen}
@@ -121,6 +121,6 @@ export const EditProfileModal = ({ isOpen, handleClick }: ModalProps) => {
                     </form>
                 </DialogContent>
             </Dialog>
-        </React.Fragment>
+        </>
     );
 };

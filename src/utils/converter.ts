@@ -1,6 +1,5 @@
 export const dateTimeConverter = (datetime: string) => {
     //2025-09-18T12:00:00
-    console.log(datetime)
     if(datetime != null) {
         let array = datetime.split('T');
         let date = array[0].split('-').reverse().join('.');
@@ -8,4 +7,12 @@ export const dateTimeConverter = (datetime: string) => {
         return date + ' ' + time;
     }
     return '';
+}
+
+export const isAfterDeadline = (deadline: string | null | undefined) => {
+    if(deadline) {
+        const today = new Date();
+        return today.toISOString() >= deadline;
+    }
+    return false;
 }
