@@ -1,27 +1,28 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
 import { Field } from '../../components/Field';
 import type { EventProps } from '../../models/Event';
 import { EventCard } from '../../components/Card/Event';
+import { EmptyResult } from '../../components/Stub';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import { useDispatch } from 'react-redux';
 import { fetchEvents } from '../../store/Events/eventAction';
 import { fetchBookings } from '../../store/Booking/bookingActions';
-import { EmptyResult } from '../../components/Stub';
 
 const HomePage = () => {
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [eventList, setEvents] = React.useState<Array<EventProps>>([]);
     const { events, isLoaded } = useAppSelector((state) => state.eventReducer);
+    const { role, login } = useAppSelector((state) => state.authReducer);
     const dispatch: any = useDispatch();
-
     React.useEffect(() => {
         if (isLoaded) {
             setEvents(events);
         } else {
+            if (role === 'STUDENT') dispatch(fetchBookings());
             dispatch(fetchEvents());
-            dispatch(fetchBookings());
         }
-    }, [isLoaded]);
+    }, [isLoaded, login]);
     React.useEffect(() => {
         setEvents(
             searchValue.trim() != ''
