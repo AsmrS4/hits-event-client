@@ -76,7 +76,6 @@ export const CreateModal = ({ isOpen, handleClick }: ModalProps) => {
         } catch (e) {
             ErrorToast('Не удалось обработать запрос');
         }
-
         handleClose();
     };
     return (
