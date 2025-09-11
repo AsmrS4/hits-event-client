@@ -1,16 +1,22 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import { dateTimeConverter } from '../../../utils/converter';
-import { useAppSelector } from '../../../hooks/useAppSelector';
 import type { BookingProps } from '../../../models/Booking';
+import { cancellRegisterOnEvent } from '../../../api/Booking/bookingApi';
+import { removeBooking } from '../../../store/Booking/bookingReducer';
+import { ErrorToast, InfoToast } from '../../Toast';
 
 export const BookingCard = (props: BookingProps) => {
-    const { booking } = useAppSelector((state) => state.bookingReducer);
     const dispatch: any = useDispatch();
-    const handleCancelBooking = () => {};
-    React.useEffect(() => {}, []);
+    const handleCancelBooking = async () => {
+        try {
+            await cancellRegisterOnEvent(props.id);
+            dispatch(removeBooking(props.id));
+            InfoToast(`Регистрация на событие "${props.title} отменено"`);
+        } catch (error) {
+            ErrorToast('Не удалось выполнить запрос');
+        }
+    };
     return (
         <div className='flex flex-col justify-between box-border w-full border-l-6 border-l-blue-500 shadow-md rounded-sm py-3 px-5'>
             <div className='title w-full flex justify-between'>

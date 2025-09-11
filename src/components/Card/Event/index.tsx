@@ -10,6 +10,7 @@ import { registerOnEvent } from '../../../api/Booking/bookingApi';
 import { ErrorToast, InfoToast } from '../../Toast';
 import { clearSession } from '../../../store/Auth/authReducer';
 import type { BookingProps } from '../../../models/Booking';
+import { fetchBookings } from '../../../store/Booking/bookingActions';
 
 export const EventCard = (props: EventProps) => {
     const { role } = useAppSelector((state) => state.authReducer);
@@ -24,6 +25,7 @@ export const EventCard = (props: EventProps) => {
         try {
             await registerOnEvent(props.id);
             setHasRegistry(true);
+            dispatch(fetchBookings());
             InfoToast('Раздел "Билеты" обновлен');
         } catch (error) {
             if (error.status === 401) {

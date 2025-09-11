@@ -15,8 +15,9 @@ const bookingSlice = createSlice( {
         setBookings: (state, action: PayloadAction<Array<BookingProps>>) => {
             state.booking = action.payload
         },
-        removeBooking: (state, action: PayloadAction<BookingProps>) => {
-            state.booking = state.booking.filter(item => item.id!=action.payload.id);
+        removeBooking: (state, action: PayloadAction<number>) => {
+            let temp = state.booking;
+            state.booking = temp.filter(item => item.id != action.payload);
         }
     }
 })
