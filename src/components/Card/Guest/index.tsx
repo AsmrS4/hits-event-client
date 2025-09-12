@@ -1,4 +1,3 @@
-import React from 'react';
 import type { UserCardProps } from '../../../models/User';
 export const GuestCard = ({ id, firstName, lastName }: UserCardProps) => {
     return (

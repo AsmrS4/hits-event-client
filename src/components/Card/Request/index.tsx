@@ -1,4 +1,3 @@
-import React from 'react';
 import type { ConfirmationRequest } from '../../../models/Request';
 import { Button } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
