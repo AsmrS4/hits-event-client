@@ -11,7 +11,6 @@ import { authorizeUser } from '@store/Auth/authAction';
 import { setErrorMessage } from '@store/Auth/authReducer';
 import { ErrorToast, SuccessToast } from '@components/Toast';
 import { loginSchema, type LoginSchema } from './index.config';
-import { fetchBookings } from '../../store/Booking/bookingActions';
 
 const LoginPage = () => {
     const {
