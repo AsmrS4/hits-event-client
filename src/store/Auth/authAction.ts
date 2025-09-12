@@ -36,6 +36,9 @@ export const authorizeUser = (payload: LoginProps) => async (dispatch: Dispatch)
                 case 401:
                     dispatch(setErrorMessage("Аккаунт не подтвержден"))
                     break;
+                case 404:
+                    dispatch(setErrorMessage("Пользователь не найден в системе"))
+                    break;
                 default:
                     dispatch(setErrorMessage("Что-то пошло не так"))
             }
