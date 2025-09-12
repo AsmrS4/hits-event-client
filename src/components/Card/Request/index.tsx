@@ -4,6 +4,9 @@ import { Button } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import ClearIcon from '@mui/icons-material/Clear';
 import { confirmAccount, rejectAccount } from '../../../api/Request/requestApi';
+import { useDispatch } from 'react-redux';
+import { removeRequest } from '../../../store/Requests/requestReducer';
+import { ErrorToast, InfoToast, SuccessToast } from '../../Toast';
 
 const roleMapper = {
     STUDENT: 'Студент',
@@ -11,8 +14,25 @@ const roleMapper = {
 };
 
 export const RequestCard = ({ id, firstName, lastName, role }: ConfirmationRequest) => {
-    const handleConfirmRequest = () => {};
-    const handleRejectRequest = () => {};
+    const dispatch: any = useDispatch();
+    const handleConfirmRequest = async () => {
+        try {
+            await confirmAccount(id);
+            dispatch(removeRequest(id));
+            SuccessToast(`Заявка №${id} одобрена`);
+        } catch (error) {
+            ErrorToast('Не удалось выполнить запрос');
+        }
+    };
+    const handleRejectRequest = async () => {
+        try {
+            await rejectAccount(id);
+            dispatch(removeRequest(id));
+            InfoToast(`Заявка №${id} отклонена`);
+        } catch (error) {
+            ErrorToast('Не удалось выполнить запрос');
+        }
+    };
     return (
         <div
             id={id.toString()}
@@ -33,6 +53,7 @@ export const RequestCard = ({ id, firstName, lastName, role }: ConfirmationReque
                         width: '32px',
                         padding: '8px',
                     }}
+                    onClick={handleConfirmRequest}
                 >
                     <DoneIcon />
                 </Button>
@@ -46,6 +67,7 @@ export const RequestCard = ({ id, firstName, lastName, role }: ConfirmationReque
                         width: '32px',
                         padding: '8px',
                     }}
+                    onClick={handleRejectRequest}
                 >
                     <ClearIcon />
                 </Button>
