@@ -1,4 +1,3 @@
-import React from 'react';
 import './index.css';
 import { TextField, type TextFieldVariants } from '@mui/material';
 
@@ -13,9 +12,6 @@ interface InputProps {
 }
 
 export const Field = (props: InputProps) => {
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        props.onChange(event);
-    };
     return (
         <TextField
             size={props.size}

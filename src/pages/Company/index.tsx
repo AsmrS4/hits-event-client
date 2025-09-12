@@ -1,7 +1,6 @@
 import React from 'react';
 import { Field } from '../../components/Field';
 import type { CompanyProps } from '../../models/Company';
-import axios from 'axios';
 import { CompanyCard } from '../../components/Card/Company';
 import { Button } from '@mui/material';
 import { CreateModal } from '../../components/Modal/CreateModal';

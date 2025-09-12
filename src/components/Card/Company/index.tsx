@@ -1,4 +1,3 @@
-import React from 'react';
 import type { CompanyProps } from '../../../models/Company';
 
 export const CompanyCard = ({ id, name }: CompanyProps) => {
