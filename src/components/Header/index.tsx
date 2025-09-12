@@ -48,6 +48,7 @@ const Header = () => {
         setAnchorElNav(null);
     };
     const handleNavigate = (path: string) => {
+        handleCloseNavMenu();
         navigate(path);
     };
     const handleCloseUserMenu = () => {

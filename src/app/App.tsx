@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { CompanyPage } from '../pages/Company';
 import { BookingsPage } from '../pages/Booking';
 import { GuestsPage } from '../pages/Guests';
+import { RequestsPage } from '../pages/Requests';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
                     <Route element={<PrivateRouter />}>
                         <Route path='/' element={<HomePage />} />
                         <Route path='/companies' element={<CompanyPage />} />
-                        <Route path='/requests' element={<HomePage />} />
+                        <Route path='/requests' element={<RequestsPage />} />
                         <Route path='/bookings' element={<BookingsPage />} />
                         <Route path='/event/guests/:eventId' element={<GuestsPage />} />
                     </Route>

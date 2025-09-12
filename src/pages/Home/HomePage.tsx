@@ -46,7 +46,9 @@ const HomePage = () => {
                     }}
                 />
                 <div className='list flex flex-col w-full gap-4'>
-                    {eventList.length == 0 && <EmptyResult message={'Мероприятия не найдены'} />}
+                    {isLoaded && eventList.length == 0 && (
+                        <EmptyResult message={'Мероприятия не найдены'} />
+                    )}
                     {eventList.map((item) => {
                         return <EventCard key={item.id} {...item} />;
                     })}
