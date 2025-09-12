@@ -40,7 +40,7 @@ export const EventCard = (props: EventProps) => {
     };
     React.useEffect(() => {
         handleHasRegistry();
-    }, []);
+    }, [booking]);
     return (
         <div className='flex flex-col justify-between box-border w-full border-l-6 border-l-blue-500 shadow-md rounded-sm py-3 px-5'>
             <div className='title w-full flex justify-between'>
