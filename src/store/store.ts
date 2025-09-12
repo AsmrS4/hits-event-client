@@ -3,12 +3,14 @@ import authSlice from './Auth/authReducer';
 import eventSlice from './Events/eventReducer'
 import companySlice from './Company/companyReducer';
 import bookingSlice from './Booking/bookingReducer';
+import requestSlice from './Requests/requestReducer';
 
 const rootReducer = combineReducers({
     authReducer: authSlice,
     eventReducer: eventSlice,
     companyReducer: companySlice,
-    bookingReducer: bookingSlice
+    bookingReducer: bookingSlice,
+    requestReducer: requestSlice
 })
 
 export const setupStore = () => {

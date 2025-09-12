@@ -8,21 +8,36 @@ import { EmptyResult } from '../../components/Stub';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { fetchEvents } from '../../store/Events/eventAction';
 import { fetchBookings } from '../../store/Booking/bookingActions';
+import { ErrorToast } from '../../components/Toast';
 
 const HomePage = () => {
     const [searchValue, setSearchValue] = React.useState<string>('');
     const [eventList, setEvents] = React.useState<Array<EventProps>>([]);
-    const { events, isLoaded } = useAppSelector((state) => state.eventReducer);
-    const { role, login } = useAppSelector((state) => state.authReducer);
+    const [isLoaded, setLoaded] = React.useState<boolean>(false);
+    const { events } = useAppSelector((state) => state.eventReducer);
+    const { role } = useAppSelector((state) => state.authReducer);
     const dispatch: any = useDispatch();
+    const loadData = async () => {
+        try {
+            setLoaded(false);
+            if (role === 'STUDENT') {
+                await dispatch(fetchBookings());
+                await dispatch(fetchEvents());
+            } else {
+                await dispatch(fetchEvents());
+            }
+            setLoaded(true);
+        } catch (error) {
+            ErrorToast('Не удалось получить данные');
+        }
+    };
     React.useEffect(() => {
         if (isLoaded) {
             setEvents(events);
         } else {
-            if (role === 'STUDENT') dispatch(fetchBookings());
-            dispatch(fetchEvents());
+            loadData();
         }
-    }, [isLoaded, login]);
+    }, [isLoaded, events]);
     React.useEffect(() => {
         setEvents(
             searchValue.trim() != ''
@@ -46,7 +61,9 @@ const HomePage = () => {
                     }}
                 />
                 <div className='list flex flex-col w-full gap-4'>
-                    {eventList.length == 0 && <EmptyResult message={'Мероприятия не найдены'} />}
+                    {isLoaded && eventList.length == 0 && (
+                        <EmptyResult message={'Мероприятия не найдены'} />
+                    )}
                     {eventList.map((item) => {
                         return <EventCard key={item.id} {...item} />;
                     })}
