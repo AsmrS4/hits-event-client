@@ -4,7 +4,6 @@ import { setBookings } from "./bookingReducer";
 
 export const fetchBookings = () => async(dispatch: Dispatch) => {
     try {
-        dispatch(setBookings([]));
         const response = await axios({
             url: `${import.meta.env.API_URL}/event/booking/my`,
             method: 'GET',
